@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:53:24 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:44:41 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct settings_s
 	long long		time_to_die;
 	int				amount_of_meals;
 	int				all_ate_enough;
+	pthread_mutex_t	*say_lock;
 	pthread_mutex_t	*okay_lock;
 	pthread_mutex_t	**forks;
 	t_philo			**philos;

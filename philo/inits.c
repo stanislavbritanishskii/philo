@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:37:59 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:42:22 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:44:30 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_settings	*create_settings(int count)
 	res->count = count;
 	res->forks = init_forks(count);
 	res->philos = create_philos(count, res->ok, res->forks, res->okay_lock);
+	res->say_lock = res->philos[0]->say_lock;
 	res->done = 0;
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:15:43 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:46:56 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:47:48 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sleep_for(int time_to_sleep)
 	int	end_time;
 
 	end_time = get_other_time() / 10 + time_to_sleep;
-	usleep(mmax(time_to_sleep - 10, 0));
+	usleep(mmax(time_to_sleep - 20, 0));
 	while (get_other_time() / 10 < end_time)
 		usleep(1);
 }
@@ -61,14 +61,21 @@ void	*main_eat(void *var)
 	while (okay(philo))
 	{
 		pthread_mutex_lock(philo->forks[philo->number]);
-		pthread_mutex_lock(philo->forks[(philo->number + 1) % philo->total]);
-		philo->last_meal_time = get_other_time() / 10;
-		philo->eaten_times++;
-		say("started eating", philo);
-		sleep_for(philo->time_to_eat);
-		pthread_mutex_unlock(philo->forks[philo->number]);
+		if (okay(philo))
+		{
+			pthread_mutex_lock(philo->forks[(philo->number + 1) % philo->total]);
+			if (okay(philo))
+			{
+				philo->last_meal_time = get_other_time() / 10;
+				philo->eaten_times++;
+				say("started eating", philo);
+				sleep_for(philo->time_to_eat);
+			}
+			pthread_mutex_unlock(philo->forks[philo->number]);
+		}
 		pthread_mutex_unlock(philo->forks[(philo->number + 1) % philo->total]);
-		say("started sleeping", philo);
+		if (okay(philo))
+			say("started sleeping", philo);
 		sleep_for(philo->time_to_sleep);
 	}
 	return (NULL);
