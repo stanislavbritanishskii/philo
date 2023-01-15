@@ -6,14 +6,14 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:43:10 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:53:24 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdio.h>

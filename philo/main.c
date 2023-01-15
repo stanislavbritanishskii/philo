@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:32:39 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:56:36 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,16 @@ int	main(int argc, char **argv)
 	int			all_ate_enough;
 	t_settings	*settings;
 
-	if (argc == 6)
+	if (argc == 5)
 		amount_of_meals = -1;
-	else if (argc == 7)
-		amount_of_meals = ft_atoi(argv[6]);
+	else if (argc == 6)
+		amount_of_meals = ft_atoi(argv[5]);
 	else
 		return (0);
 	settings = create_settings(ft_atoi(argv[1]));
 	settings->time_to_die = ft_atoi(argv[2]);
 	settings->time_to_eat = ft_atoi(argv[3]);
 	settings->time_to_sleep = ft_atoi(argv[4]);
-	settings->time_to_sleep = ft_atoi(argv[5]);
 	settings->amount_of_meals = amount_of_meals;
 	some_more_vars_for_philos(settings->philos,
 		settings->time_to_eat, settings->time_to_sleep, settings->start_time);
