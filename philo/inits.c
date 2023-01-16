@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:37:59 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 15:25:54 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:40:52 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_settings	*create_settings(int count)
 	pthread_mutex_init(res->start_lock, NULL);
 	res->count = count;
 	res->forks = init_forks(count);
-	res->philos = create_philos(count, res->ok, res->forks, res->okay_lock);
+	res->philos = create_philos(count, 1, res->forks, res->okay_lock);
 	res->say_lock = res->philos[0]->say_lock;
 	res->done = 0;
 	return (res);

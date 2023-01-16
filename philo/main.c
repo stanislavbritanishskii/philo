@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 20:23:30 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:41:19 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,10 @@ void	main_thread(t_settings *settings, int i, int all_ate_enough,
 			if (meals[0]
 				+ settings->time_to_die < get_other_time(settings->time_lock))
 			{
-				
 				pthread_mutex_lock(settings->say_lock);
 				printf("%d %d died\n", get_other_time(settings->time_lock), i);
 				pthread_mutex_unlock(settings->say_lock);
-				pthread_mutex_lock(settings->okay_lock);
-				settings->ok[0] = 0;
-				pthread_mutex_unlock(settings->okay_lock);
+				set_all_dead(settings->philos);
 				settings->done = 1;
 			}
 			all_ate_enough *= (meals[1]
@@ -76,7 +73,7 @@ void	main_thread(t_settings *settings, int i, int all_ate_enough,
 		}
 		if (all_ate_enough)
 		{
-			settings->ok[0] = 0;
+			set_all_dead(settings->philos);
 			settings->done = 1;
 		}
 		free(meals);

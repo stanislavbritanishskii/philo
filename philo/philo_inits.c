@@ -6,14 +6,14 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:41:38 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 14:38:55 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:39:21 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 t_philo	*create_philo(int total_number, int individual_number,
-		int *ok, pthread_mutex_t **forks)
+		int ok, pthread_mutex_t **forks)
 {
 	t_philo	*res;
 
@@ -25,10 +25,12 @@ t_philo	*create_philo(int total_number, int individual_number,
 	res->forks = forks;
 	res->eat_lock = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(res->eat_lock, NULL);
+	res->okay_lock = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(res->okay_lock, NULL);
 	return (res);
 }
 
-t_philo	**create_philos(int n, int*ok, pthread_mutex_t **forks,
+t_philo	**create_philos(int n, int ok, pthread_mutex_t **forks,
 		pthread_mutex_t *okay_lock)
 {
 	t_philo			**res;
@@ -42,7 +44,7 @@ t_philo	**create_philos(int n, int*ok, pthread_mutex_t **forks,
 	while (i < n)
 	{
 		res[i] = create_philo(n, i, ok, forks);
-		res[i]->okay_lock = okay_lock;
+		// res[i]->okay_lock = okay_lock;
 		res[i]->say_lock = say_lock;
 		res[i]->eaten_times = 0;
 		i++;
@@ -63,6 +65,20 @@ void	some_more_vars_for_philos(t_philo **philos, long long time_to_eat,
 		philos[i]->time_to_eat = time_to_eat;
 		philos[i]->start_time = start_time;
 		philos[i]->last_meal_time = start_time;
+		i++;
+	}
+}
+
+void	set_all_dead(t_philo **philos)
+{
+	int i;
+
+	i = 0;
+	while(philos[i])
+	{
+		pthread_mutex_lock(philos[i]->okay_lock);
+		philos[i]->okay = 0;
+		pthread_mutex_unlock(philos[i]->okay_lock);
 		i++;
 	}
 }

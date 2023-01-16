@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 15:28:35 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:40:12 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct philo_s
 	int				number;
 	pthread_t		*thread;
 	int				total;
-	int				*okay;
+	int				okay;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*say_lock;
 	pthread_mutex_t	*okay_lock;
@@ -61,7 +61,7 @@ typedef struct settings_s
 }	t_settings;
 
 pthread_mutex_t	**init_forks(int n);
-t_philo			**create_philos(int n, int*ok,
+t_philo			**create_philos(int n, int 	ok,
 					pthread_mutex_t **forks, pthread_mutex_t *okay_lock);
 void			some_more_vars_for_philos(t_philo **philos,
 					long long time_to_eat,
@@ -75,4 +75,5 @@ void			*main_eat(void *var);
 t_settings		*create_settings(int count);
 long long *get_meals(t_philo *philo);
 void update_meals(t_philo *philo);
+void	set_all_dead(t_philo **philos);
 #endif

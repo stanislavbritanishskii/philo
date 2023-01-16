@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:15:43 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 15:31:28 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:37:46 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	okay(t_philo *philo)
 
 	res = 0;
 	pthread_mutex_lock(philo->okay_lock);
-	res = *philo->okay;
+	res = philo->okay;
 	pthread_mutex_unlock(philo->okay_lock);
 	return (res);
 }
