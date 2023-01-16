@@ -7,7 +7,7 @@ SRC="libft/libft.a philo/eat.c philo/inits.c philo/times.c philo/philo_inits.c p
 
 echo $SRCS
 
-gcc -pthread $SRC
+gcc $SRC
 # gcc -fsanitize=thread $SRC
 mv a.out output
 ./output $1 $2 $3 $4 $5

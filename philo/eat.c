@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:15:43 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 20:37:46 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:53:38 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ int	say(char *phrase, t_philo *philo)
 {
 	char	*part;
 
-	pthread_mutex_lock(philo->say_lock);
+		pthread_mutex_lock(philo->say_lock);
 	if (okay(philo))
+	{
 		printf("%d %d %s\n", get_other_time(philo->time_lock), philo->number, phrase);
-	pthread_mutex_unlock(philo->say_lock);
+	}
+		pthread_mutex_unlock(philo->say_lock);
 	return (1);
 }
 
