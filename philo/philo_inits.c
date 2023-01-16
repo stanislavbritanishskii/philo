@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:41:38 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:42:19 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:38:55 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_philo	*create_philo(int total_number, int individual_number,
 	res->thread = create_thread();
 	res->okay = ok;
 	res->forks = forks;
+	res->eat_lock = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(res->eat_lock, NULL);
 	return (res);
 }
 

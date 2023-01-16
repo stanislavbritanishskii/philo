@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:54:32 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 15:35:48 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:52:10 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ long long	get_time(void)
 	long long		res;
 
 	gettimeofday(&tv, &tz);
-	res = tv.tv_sec * 10000 + tv.tv_usec / 100;
+	res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (res);
 }
 
-int	get_other_time(void)
+int	get_other_time(pthread_mutex_t *time_lock)
 {
 	static long long		start = 0;
 	static pthread_mutex_t	lock;
 	int						res;
 
+	pthread_mutex_lock(time_lock);
 	if (start == 0)
 	{
 		start = get_time();
-		pthread_mutex_init(&lock, NULL);
+	pthread_mutex_unlock(time_lock);
 		return (0);
 	}
 	else
 	{
-		pthread_mutex_lock(&lock);
 		res = (int)(get_time() - start);
-		pthread_mutex_unlock(&lock);
+	pthread_mutex_unlock(time_lock);
 		return (res);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 18:44:41 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:48:34 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct philo_s
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*say_lock;
 	pthread_mutex_t	*okay_lock;
+	pthread_mutex_t	*time_lock;
+	pthread_mutex_t *eat_lock;
 	long long		time_to_sleep;
 	long long		time_to_eat;
 	long long		time_to_die;
@@ -51,6 +53,7 @@ typedef struct settings_s
 	int				all_ate_enough;
 	pthread_mutex_t	*say_lock;
 	pthread_mutex_t	*okay_lock;
+	pthread_mutex_t	*time_lock;
 	pthread_mutex_t	**forks;
 	t_philo			**philos;
 }	t_settings;
@@ -62,10 +65,12 @@ void			some_more_vars_for_philos(t_philo **philos,
 					long long time_to_eat,
 					long long time_to_sleep, long long start_time);
 long long		get_time(void);
-int				get_other_time(void);
+void	and_more_philo_vars(t_philo **philos, pthread_mutex_t *time_lock);
+int				get_other_time(pthread_mutex_t *time_lock);
 pthread_t		*create_thread(void);
 int				say(char *phrase, t_philo *philo);
 void			*main_eat(void *var);
 t_settings		*create_settings(int count);
-
+long long *get_meals(t_philo *philo);
+void update_meals(t_philo *philo);
 #endif

@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/15 18:48:59 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:51:26 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	create_threads(t_settings *settings)
 			NULL, main_eat, settings->philos[i]);
 		i = i + 2;
 	}
-	usleep(2);
+	usleep(settings->time_to_eat / 2);
 	i = 1;
 	while (i < settings->count)
 	{
@@ -44,29 +44,37 @@ void	join_threads(t_settings *settings)
 		i++;
 	}
 }
+// 0 | 0 | 0 |
+// 1 < 0 > 0 >
+// 0 > 0 > 1 <
+// 0 > 1 < 0 >
 
+// 0 | 0 | 0 | 0 |
+// 1 < 0 > 1 < 0 >
 void	main_thread(t_settings *settings, int i, int all_ate_enough,
 					int amount_of_meals)
 {
+	long long *meals;
 	while (!settings->done)
 	{
 		i = 0;
 		all_ate_enough = 1;
 		while (!settings->done && settings->philos[i])
 		{
-			if (settings->philos[i]->last_meal_time
-				+ settings->time_to_die < get_other_time() / 10)
+			meals = get_meals(settings->philos[i]);
+			if (meals[0]
+				+ settings->time_to_die < get_other_time(settings->time_lock))
 			{
 				
 				pthread_mutex_lock(settings->say_lock);
-				printf("%d %d died\n", get_other_time()/ 10, i);
+				printf("%d %d died\n", get_other_time(settings->time_lock), i);
 				pthread_mutex_unlock(settings->say_lock);
 				pthread_mutex_lock(settings->okay_lock);
 				settings->ok[0] = 0;
 				pthread_mutex_unlock(settings->okay_lock);
 				settings->done = 1;
 			}
-			all_ate_enough *= (settings->philos[i]->eaten_times
+			all_ate_enough *= (meals[1]
 					>= amount_of_meals && amount_of_meals >= 0);
 			i++;
 		}
@@ -75,6 +83,7 @@ void	main_thread(t_settings *settings, int i, int all_ate_enough,
 			settings->ok[0] = 0;
 			settings->done = 1;
 		}
+		free(meals);
 		usleep(10);
 	}
 }
@@ -99,6 +108,7 @@ int	main(int argc, char **argv)
 	settings->amount_of_meals = amount_of_meals;
 	some_more_vars_for_philos(settings->philos,
 		settings->time_to_eat, settings->time_to_sleep, settings->start_time);
+	and_more_philo_vars(settings->philos, settings->time_lock);
 	create_threads(settings);
 	main_thread(settings, i, all_ate_enough, amount_of_meals);
 	join_threads(settings);
