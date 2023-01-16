@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 16:33:27 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:23:30 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_threads(t_settings *settings)
 			NULL, main_eat, settings->philos[i]);
 		i = i + 2;
 	}
-	// usleep(settings->time_to_eat / 2);
+	usleep(settings->time_to_eat / 2);
 	i = 1;
 	while (i < settings->count)
 	{
