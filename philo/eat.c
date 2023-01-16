@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:15:43 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 14:49:56 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:31:28 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	*main_eat(void *var)
 	int		time;
 
 	philo = (t_philo *)var;
+	
+	// pthread_mutex_lock(philo->start_lock);
+	// pthread_mutex_unlock(philo->start_lock);
 	while (okay(philo))
 	{
 		pthread_mutex_lock(philo->forks[philo->number]);
@@ -70,9 +73,9 @@ void	*main_eat(void *var)
 				say("started eating", philo);
 				sleep_for(philo->time_to_eat, philo);
 			}
-			pthread_mutex_unlock(philo->forks[philo->number]);
+			pthread_mutex_unlock(philo->forks[(philo->number + 1) % philo->total]);
 		}
-		pthread_mutex_unlock(philo->forks[(philo->number + 1) % philo->total]);
+		pthread_mutex_unlock(philo->forks[philo->number]);
 		if (okay(philo))
 			say("started sleeping", philo);
 		sleep_for(philo->time_to_sleep, philo);

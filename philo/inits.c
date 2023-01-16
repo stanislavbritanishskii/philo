@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:37:59 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 14:50:24 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:25:54 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ pthread_t	*create_thread(void)
 	return (res);
 }
 
-void	and_more_philo_vars(t_philo **philos, pthread_mutex_t *time_lock)
+void	and_more_philo_vars(t_philo **philos, pthread_mutex_t *time_lock, pthread_mutex_t *start_lock)
 {
 	int	i;
 
@@ -48,6 +48,7 @@ void	and_more_philo_vars(t_philo **philos, pthread_mutex_t *time_lock)
 	while (philos[i])
 	{
 		philos[i]->time_lock = time_lock;
+		philos[i]->start_lock = start_lock;
 		i++;
 	}
 }
@@ -63,6 +64,8 @@ t_settings	*create_settings(int count)
 	pthread_mutex_init(res->okay_lock, NULL);
 	res->time_lock = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(res->time_lock, NULL);
+	res->start_lock = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(res->start_lock, NULL);
 	res->count = count;
 	res->forks = init_forks(count);
 	res->philos = create_philos(count, res->ok, res->forks, res->okay_lock);

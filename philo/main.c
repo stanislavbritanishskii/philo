@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 14:51:26 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:33:27 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	create_threads(t_settings *settings)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(settings->start_lock);
 	while (i < settings->count)
 	{
 		pthread_create(settings->philos[i]->thread,
 			NULL, main_eat, settings->philos[i]);
 		i = i + 2;
 	}
-	usleep(settings->time_to_eat / 2);
+	// usleep(settings->time_to_eat / 2);
 	i = 1;
 	while (i < settings->count)
 	{
@@ -31,6 +32,7 @@ void	create_threads(t_settings *settings)
 			NULL, main_eat, settings->philos[i]);
 		i = i + 2;
 	}
+	pthread_mutex_unlock(settings->start_lock);
 }
 
 void	join_threads(t_settings *settings)
@@ -44,13 +46,7 @@ void	join_threads(t_settings *settings)
 		i++;
 	}
 }
-// 0 | 0 | 0 |
-// 1 < 0 > 0 >
-// 0 > 0 > 1 <
-// 0 > 1 < 0 >
 
-// 0 | 0 | 0 | 0 |
-// 1 < 0 > 1 < 0 >
 void	main_thread(t_settings *settings, int i, int all_ate_enough,
 					int amount_of_meals)
 {
@@ -84,7 +80,7 @@ void	main_thread(t_settings *settings, int i, int all_ate_enough,
 			settings->done = 1;
 		}
 		free(meals);
-		usleep(10);
+		// usleep(10);
 	}
 }
 
@@ -108,7 +104,7 @@ int	main(int argc, char **argv)
 	settings->amount_of_meals = amount_of_meals;
 	some_more_vars_for_philos(settings->philos,
 		settings->time_to_eat, settings->time_to_sleep, settings->start_time);
-	and_more_philo_vars(settings->philos, settings->time_lock);
+	and_more_philo_vars(settings->philos, settings->time_lock, settings->start_lock);
 	create_threads(settings);
 	main_thread(settings, i, all_ate_enough, amount_of_meals);
 	join_threads(settings);
