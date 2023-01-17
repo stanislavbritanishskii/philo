@@ -6,37 +6,11 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:37:59 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/17 18:21:01 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:18:33 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
-pthread_mutex_t	*create_fork(void)
-{
-	pthread_mutex_t	*res;
-
-	res = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(res, NULL);
-	return (res);
-}
-
-pthread_mutex_t	**init_forks(int n)
-{
-	pthread_mutex_t	**res;
-	int i;
-
-	i = 0;
-	res = malloc(sizeof(pthread_mutex_t *) * (n + 1));
-	while (i < n)
-	{
-		res[i] = create_fork();
-		i++;
-	}
-	res[i] = NULL;
-	return (res);
-}
 
 pthread_t	*create_thread(void)
 {
@@ -68,27 +42,26 @@ t_settings	*create_settings(int count)
 	pthread_mutex_init(res->time_lock, NULL);
 	res->count = count;
 	res->forks = init_forks(count);
-	res->philos = create_philos(count, 1, res->forks, NULL);
+	res->philos = create_philos(count, 1, res->forks);
 	if (res->count)
 		res->say_lock = res->philos[0]->say_lock;
 	res->done = 0;
 	return (res);
 }
 
-
-long long *get_meals(t_philo *philo)
+long long	*get_meals(t_philo *philo)
 {
-	long long *res;
+	long long	*res;
 
 	res = malloc(sizeof(long long) * 2);
 	pthread_mutex_lock(philo->eat_lock);
 	res[0] = philo->last_meal_time;
 	res[1] = philo->eaten_times;
 	pthread_mutex_unlock(philo->eat_lock);
-	return(res);
+	return (res);
 }
 
-void update_meals(t_philo *philo)
+void	update_meals(t_philo *philo)
 {
 	pthread_mutex_lock(philo->eat_lock);
 	philo->last_meal_time = get_other_time(philo->time_lock);

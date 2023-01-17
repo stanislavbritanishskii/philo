@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 22:15:43 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/17 18:00:24 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:16:19 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ int	okay(t_philo *philo)
 
 int	say(char *phrase, t_philo *philo)
 {
-	char	*part;
-
-		pthread_mutex_lock(philo->say_lock);
+	pthread_mutex_lock(philo->say_lock);
 	if (okay(philo))
 	{
-		printf("%d %d %s\n", get_other_time(philo->time_lock), philo->number, phrase);
+		printf("%d %d %s\n",
+			get_other_time(philo->time_lock), philo->number, phrase);
 	}
-		pthread_mutex_unlock(philo->say_lock);
+	pthread_mutex_unlock(philo->say_lock);
 	return (1);
 }
 
@@ -44,41 +43,30 @@ int	mmax(int a, int b)
 	return (b);
 }
 
-void	sleep_for(int time_to_sleep, t_philo *philo)
+void	part_of_main_eat(t_philo *philo)
 {
-	int	end_time;
-
-	end_time = get_other_time(philo->time_lock) + time_to_sleep;
-	while (get_other_time(philo->time_lock) < end_time)
-		if(okay(philo))
-			usleep(100);
-		else
-			return ;
+	update_meals(philo);
+	say("is eating", philo);
+	sleep_for(philo->time_to_eat, philo);
 }
 
 void	*main_eat(void *var)
 {
 	t_philo	*philo;
-	int		time;
 
 	philo = (t_philo *)var;
-	
-	// pthread_mutex_lock(philo->start_lock);
-	// pthread_mutex_unlock(philo->start_lock);
 	while (okay(philo))
 	{
 		pthread_mutex_lock(philo->forks[philo->number]);
 		if (okay(philo))
 		{
 			say("has taken a fork", philo);
-			pthread_mutex_lock(philo->forks[(philo->number + 1) % philo->total]);
+			pthread_mutex_lock(philo->forks[(philo->number + 1)
+				% philo->total]);
 			if (okay(philo))
-			{
-				update_meals(philo);
-				say("is eating", philo);
-				sleep_for(philo->time_to_eat, philo);
-			}
-			pthread_mutex_unlock(philo->forks[(philo->number + 1) % philo->total]);
+				part_of_main_eat(philo);
+			pthread_mutex_unlock(philo->forks[(philo->number + 1)
+				% philo->total]);
 		}
 		pthread_mutex_unlock(philo->forks[philo->number]);
 		say("is sleeping", philo);

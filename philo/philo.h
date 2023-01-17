@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/17 18:19:11 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:25:33 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct philo_s
 	pthread_mutex_t	*say_lock;
 	pthread_mutex_t	*okay_lock;
 	pthread_mutex_t	*time_lock;
-	pthread_mutex_t *eat_lock;
+	pthread_mutex_t	*eat_lock;
 	long long		time_to_sleep;
 	long long		time_to_eat;
 	long long		time_to_die;
@@ -57,22 +57,30 @@ typedef struct settings_s
 	t_philo			**philos;
 }	t_settings;
 
-void	sleep_for(int time_to_sleep, t_philo *philo);
+void			sleep_for(int time_to_sleep, t_philo *philo);
 pthread_mutex_t	**init_forks(int n);
-t_philo			**create_philos(int n, int 	ok,
-					pthread_mutex_t **forks, pthread_mutex_t *okay_lock);
+t_philo			**create_philos(int n, int ok,
+					pthread_mutex_t **forks);
 void			some_more_vars_for_philos(t_philo **philos,
 					long long time_to_eat,
 					long long time_to_sleep, long long start_time);
 long long		get_time(void);
-void	and_more_philo_vars(t_philo **philos, pthread_mutex_t *time_lock);
+void			and_more_philo_vars(t_philo **philos,
+					pthread_mutex_t *time_lock);
 int				get_other_time(pthread_mutex_t *time_lock);
 pthread_t		*create_thread(void);
 int				say(char *phrase, t_philo *philo);
 void			*main_eat(void *var);
 t_settings		*create_settings(int count);
-long long *get_meals(t_philo *philo);
-void update_meals(t_philo *philo);
-void	set_all_dead(t_philo **philos);
-void printer(char *str);
+long long		*get_meals(t_philo *philo);
+void			update_meals(t_philo *philo);
+void			set_all_dead(t_philo **philos);	
+int				okay(t_philo *philo);
+int				ft_atoi(const char *str);
+void			create_threads(t_settings *settings);
+void			join_threads(t_settings *settings);
+void			finita(t_settings *settings);
+int				check_initial(t_settings *settings);
+void			destroy_philos(t_philo **philos);
+void			destroy_forks(pthread_mutex_t **forks);
 #endif

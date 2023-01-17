@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:41:38 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/17 18:25:03 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:13:53 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ t_philo	*create_philo(int total_number, int individual_number,
 	return (res);
 }
 
-t_philo	**create_philos(int n, int ok, pthread_mutex_t **forks,
-		pthread_mutex_t *okay_lock)
+t_philo	**create_philos(int n, int ok, pthread_mutex_t **forks)
 {
 	t_philo			**res;
 	int				i;
@@ -73,10 +72,10 @@ void	some_more_vars_for_philos(t_philo **philos, long long time_to_eat,
 
 void	set_all_dead(t_philo **philos)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(philos[i])
+	while (philos[i])
 	{
 		pthread_mutex_lock(philos[i]->okay_lock);
 		philos[i]->okay = 0;

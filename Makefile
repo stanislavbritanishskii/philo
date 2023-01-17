@@ -6,15 +6,15 @@
 #    By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/17 18:04:41 by sbritani          #+#    #+#              #
-#    Updated: 2023/01/17 18:26:24 by sbritani         ###   ########.fr        #
+#    Updated: 2023/01/17 19:26:06 by sbritani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-SRCS = 	philo/eat.c philo/inits.c philo/times.c philo/philo_inits.c philo/main.c
+SRCS = 	philo/eat.c philo/inits.c philo/times.c philo/philo_inits.c philo/main.c philo/utils1.c philo/utils2.c
 BONUS_SRCS = 	main_bonus.c utils_bonus.c paths_bonus.c pipes_bonus.c plumbs_bonus.c
-NAME =  pipex
-BONUS_NAME =  pipex_bonus
+NAME =  philo_main
+BONUS_NAME =  philo_bonus
 LIBFT	:= ./libft
 OBJ	= $(SRCS:.c=.o)
 BONUS_OBJ	= $(BONUS_SRCS:.c=.o)
