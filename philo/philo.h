@@ -6,14 +6,13 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:02:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 21:17:38 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:19:11 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "../libft/libft.h"
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdio.h>
@@ -42,7 +41,7 @@ typedef struct philo_s
 typedef struct settings_s
 {
 	int				count;
-	int				*ok;
+	int				ok;
 	int				done;
 	int				i;
 	long long		time_to_eat;
@@ -58,6 +57,7 @@ typedef struct settings_s
 	t_philo			**philos;
 }	t_settings;
 
+void	sleep_for(int time_to_sleep, t_philo *philo);
 pthread_mutex_t	**init_forks(int n);
 t_philo			**create_philos(int n, int 	ok,
 					pthread_mutex_t **forks, pthread_mutex_t *okay_lock);
@@ -74,4 +74,5 @@ t_settings		*create_settings(int count);
 long long *get_meals(t_philo *philo);
 void update_meals(t_philo *philo);
 void	set_all_dead(t_philo **philos);
+void printer(char *str);
 #endif

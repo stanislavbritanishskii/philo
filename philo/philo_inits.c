@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:41:38 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 20:39:21 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:25:03 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ t_philo	**create_philos(int n, int ok, pthread_mutex_t **forks,
 	int				i;
 	pthread_mutex_t	*say_lock;
 
-	say_lock = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(say_lock, NULL);
+	if (n)
+	{
+		say_lock = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(say_lock, NULL);
+	}
 	res = malloc(sizeof(t_philo *) * (n + 1));
 	i = 0;
 	while (i < n)
 	{
 		res[i] = create_philo(n, i, ok, forks);
-		// res[i]->okay_lock = okay_lock;
 		res[i]->say_lock = say_lock;
 		res[i]->eaten_times = 0;
 		i++;

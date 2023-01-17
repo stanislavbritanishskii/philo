@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:54:32 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/16 14:52:10 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:51:04 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 long long	get_time(void)
 {
-	struct timeval	tv;
-	struct timezone	tz;
+	static struct timeval	tv;
+	static struct timezone	tz;
 	long long		res;
 
 	gettimeofday(&tv, &tz);
@@ -26,7 +26,6 @@ long long	get_time(void)
 int	get_other_time(pthread_mutex_t *time_lock)
 {
 	static long long		start = 0;
-	static pthread_mutex_t	lock;
 	int						res;
 
 	pthread_mutex_lock(time_lock);

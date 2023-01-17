@@ -3,7 +3,7 @@
 clear
 output=$(echo $1 | sed "s/\..*//")
 rm output
-SRC="libft/libft.a philo/eat.c philo/inits.c philo/times.c philo/philo_inits.c philo/main.c"
+SRC="philo/eat.c philo/inits.c philo/times.c philo/philo_inits.c philo/main.c"
 
 echo $SRCS
 
