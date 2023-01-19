@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:55:14 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/19 19:56:09 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:22:39 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_philo	*create_philo(t_settings *settings, int number)
 {
-	t_philo *res;
+	t_philo	*res;
 
 	res = malloc(sizeof(t_philo));
 	res->number = number;
@@ -30,11 +30,10 @@ t_philo	*create_philo(t_settings *settings, int number)
 	return (res);
 }
 
-
 void	create_philos(t_settings *settings)
 {
 	int	i;
-	
+
 	settings->philos = malloc(sizeof(t_philo *) * (settings->amount + 1));
 	i = 0;
 	while (i < settings->amount)
@@ -48,9 +47,9 @@ void	create_philos(t_settings *settings)
 void	free_philos(t_philo **philos)
 {
 	int	i;
-	
+
 	i = -1;
-	while(philos[++i])
+	while (philos[++i])
 		free(philos[i]);
 	free(philos);
 }
