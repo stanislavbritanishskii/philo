@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:10:28 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/19 20:23:00 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:13:28 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,19 @@ void	say(sem_t *say_sem, int number, char *phrase, int final)
 	printf("%d %d %s\n", get_other_time(), number, phrase);
 	if (!final)
 		sem_post(say_sem);
+}
+
+int	check_initial(t_settings *settings)
+{
+	if (settings->time_to_die && settings->time_to_eat
+		&& settings->time_to_sleep && settings->amount > 1)
+		return (1);
+	else if (settings->amount == 1)
+	{
+		say(settings->say_semaphore, 0, "has taken a fork", 0);
+		sleep_for(settings->time_to_die, settings->philos[0]);
+		say(settings->say_semaphore, 0, "died", 1);
+	}
+	free(settings);
+	return (0);
 }

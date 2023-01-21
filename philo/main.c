@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:48:15 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/17 19:25:04 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:13:00 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,4 @@ void	func(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	func(argc, argv);
-	system("leaks philo_main");
 }

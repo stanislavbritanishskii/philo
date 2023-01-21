@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:07:25 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/19 20:23:14 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 20:21:13 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	get_other_time(void)
 void	sleep_for(int time_to_sleep, t_philo *philo)
 {
 	int	end_time;
-	int	death_time;
 
 	end_time = get_other_time() + time_to_sleep;
 	while (get_other_time() < end_time)

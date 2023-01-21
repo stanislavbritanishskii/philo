@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:06:01 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/19 20:21:54 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:13:41 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void		say(sem_t *say_sem, int number, char *phrase, int final);
 void		update_meals(t_philo *philo);
 void		finish(t_settings *settings);
 int			ft_atoi(const char *str);
+int			check_initial(t_settings *settings);
 #endif

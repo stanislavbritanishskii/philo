@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:13:28 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/19 20:21:03 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:15:00 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	waitress(t_settings *settings)
 		waitpid(settings->pids[i], NULL, 0);
 		i++;
 	}
+	sem_unlink(settings->sem_name);
+	sem_close(settings->main_semaphore);
 }
 
 void	do_forks(t_settings *settings, int i)
@@ -96,13 +98,12 @@ void	do_forks(t_settings *settings, int i)
 		}
 		i++;
 		if (i == settings->amount / 2)
-			usleep(5000);
+			usleep(1000);
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	int			pid;
 	int			i;
 	int			amount_of_meals;
 	t_settings	*settings;
@@ -121,10 +122,10 @@ int	main(int argc, char **argv)
 	while (--i)
 		settings->philos[i - 1]->amount_of_meals = settings->amount_of_meals;
 	i = 0;
+	if (!check_initial(settings))
+		return (0);
 	get_other_time();
 	do_forks(settings, i);
 	waitress(settings);
-	sem_unlink(settings->sem_name);
-	sem_close(settings->main_semaphore);
 	return (0);
 }
