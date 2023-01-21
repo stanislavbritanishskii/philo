@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:10:28 by sbritani          #+#    #+#             */
-/*   Updated: 2023/01/21 22:13:28 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:55:49 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_atoi(const char *str)
 		else
 			return (0);
 	}
-	return (res);
+	return (res * (sign == 1));
 }
 
 void	finish(t_settings *settings)
